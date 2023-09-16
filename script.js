@@ -50,17 +50,19 @@ function clearInputFieldEl() {
 }
 
 function appendItemToshoppingListEl(item) {
-    let itemID = item[0]
-    let itemValue = item[1]
+  let itemID = item[0]
+  let itemValue = item[1].trim()
+  if (itemValue === "") {
+    return
+  }
+  let newEl = document.createElement("li")
+  newEl.textContent = itemValue
 
-    let newEl = document.createElement("li")
-    newEl.textContent = itemValue
+  newEl.addEventListener("click", function () {
+    let exactLocationOfItemInDB = ref(database, `shoppingList/${itemID}`)
 
-    newEl.addEventListener("click", function() {
-        let exactLocationOfItemInDB = ref(database, `shoppingList/${itemID}`)
-
-        remove(exactLocationOfItemInDB)
-    })
+    remove(exactLocationOfItemInDB)
+  })
 
     shoppingListEl.append(newEl)
 }
